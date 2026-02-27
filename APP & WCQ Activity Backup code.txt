@@ -1,0 +1,2884 @@
+# E1G1
+from __future__ import division, print_function, absolute_import, unicode_literals
+import selenium
+from selenium import webdriver 
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+chrome_options = Options()
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")  
+driver_path = ChromeDriverManager().install()
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service, options=chrome_options)
+import time   
+import pandas as pd
+
+
+import imaplib
+import base64
+import os
+import email
+from imapclient import IMAPClient
+import webbrowser
+from email.header import decode_header
+import pyautogui
+import pyperclip
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText 
+from email import encoders
+from docx import Document
+from docx.shared import RGBColor
+from docx import Document
+import smtplib
+import subprocess
+import sys
+import psutil
+import openpyxl
+
+#-------------------------------------------------------------
+# def extract_wc_type(jdrive_path):
+#     try:
+#         filename = jdrive_path.split("\\")[-1]
+#         words = filename.split()
+
+#         if "WC" in words and "MKT" in words:
+#             wc_index = words.index("WC")
+#             mkt_index = words.index("MKT")
+
+#             if mkt_index - wc_index == 2:
+#                 return words[wc_index + 1]
+
+#         return ""
+#     except:
+#         return ""
+#--------------------------------------------------------------
+
+def dynamicpaths123(jdrive_path):
+    jdrivepath1=""
+    deepak=""
+    p=jdrive_path.split("\\")
+    p1=p[-1]
+    jdrive=""
+    for i,j in enumerate(p[2:]):
+        if i==7: 
+            break;
+        jdrive+=j+"\\"
+    jdrive="\\\\"+jdrive
+    import os
+    arr=os.listdir(jdrive)
+    p2=p1.index("@")
+    p3=p1[:p2+1]
+    for i in arr:
+        if p3 in i:
+            deepak=i
+    j=jdrive+"\\"+deepak
+#     from os.path import isfile, join
+#     onlyfiles = [f for f in os.listdir(j) if isfile(join(j, f))]
+#     print(onlyfiles,"*******")
+#     for i in onlyfiles:
+#         if ((i[:25].lower()=="2021 wc marketing summary") or (i[:25].lower()== "2022 wc marketing summary")) and i[-5:].lower()==".docx":
+#             jdrivepath1=j+"\\"+i
+    return j
+commonpath = "\\\\JGPCOMMON\\Home\\Shared\\Copier_Scans\\Commercial Lines\\"
+def jdrivepath(text1):
+    jdrivepath1=""
+    mypath=""
+    text2=text1.split("\\")
+    text3=text2[0] + "\\" 
+    text4=text3+text2[1]+"\\"
+    text5=text4+text2[2]
+    text6=commonpath+text5
+    text41=commonpath+text4
+    arr = os.listdir(text41)
+    for i in arr:
+        try:
+            j=i.index("@")
+        except:
+            continue
+        k=i[:j+1]
+        if k==text2[-1]:
+            mypath=text41+i
+    from os.path import isfile, join
+    onlyfiles = [f for f in os.listdir(mypath) if isfile(join(mypath, f))]
+    for i in onlyfiles:
+        if str(i[:3]).lower()=="app" and i[-4:]==".pdf":
+            jdrivepath1=mypath+"\\"+i
+
+    return text6,jdrivepath1,mypath 
+def jdriverpathmatchexception():
+    fast_track=[]
+    import openpyxl
+    path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"#"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+
+    # To open the workbook  
+    # workbook object is created 
+    wb_obj = openpyxl.load_workbook(path) 
+    # Get workbook active sheet object 
+    # from the active attribute 
+
+    sheet= wb_obj.active
+    index3=[]
+    for j in index2:
+        res=False
+        for i,row in enumerate(sheet.iter_rows()):
+            check=str(row[4].value)
+            if i==0:
+                continue;
+            elif row[6].value=="Received" or check[:4]=="2019" or check[:4]=="2020":
+                continue;
+            jdrivermatch=row[3].value
+            jdrivermatching=jdrivermatch#.replace("\\\\","\\")
+            #print(i)l1
+            match1=d["lst%s"%j][3][11:]
+            try:
+                index_match=match1.index("@")
+            except:
+                continue;
+            d["lst%s"%j][3]=d["lst%s"%j][3][:index_match+12]
+
+            for r,m in enumerate(d["lst%s"%j][3][11:]):
+                if m.isalpha():
+                    fi=r
+                    #print(m)
+                    break;
+            print(jdrivermatching==commonpath+d["lst%s"%j][3][11+fi:])
+            print(jdrivermatching,commonpath+d["lst%s"%j][3][11+fi:],"******************************")
+            if jdrivermatching==commonpath+d["lst%s"%j][3][11+fi:]:
+                index3.append(j)
+                fast_track.append(i)
+                print("FFFFFFFFFFFFFFFFFFFFFFFFFAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSTTTTTTT",fast_track)
+                res=True
+                print(res)
+        if res==False:
+            x=d['lst%s'%j][0].index("<")
+            y=d['lst%s'%j][0].index(">")
+            can1=d["lst%s"%j][0][:x]
+            can2=d["lst%s"%j][0][x+1:y]
+            SUBJECT = "BOT Failed To Process WC Quote Bot"
+            body = "Hi "+str(can1)+",\n\nBot failed to complete WCQ Activity process. Jdrive path doesn't match in Dairy calender report\nJdrivepath: "+str(commonpath+d["lst%s"%j][3][11:])+"\n\n\nThank You\nJanice"
+            import win32com.client
+            outlook = win32com.client.Dispatch('outlook.application')
+            mail = outlook.CreateItem(0)
+            mail.To = can2
+            mail.Subject =SUBJECT
+            #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+            mail.Body = body
+            #mail.Attachments.Add(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\screenshots\APP\app.docx")
+            #mail.Attachments.Add('c:\\sample2.xlsx')
+            mail.CC = 'vijay_m@exdion.com'
+            mail.Send()
+
+            from datetime import datetime
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            comments="bot threw an exception in wcq activity due to jdrivepath match exception"
+            time.sleep(4)
+            From=d["lst%s"%j][0]
+            i1=From.index("<")
+            from1=From[:i1]
+            emailid=From[i1+1:-1]
+            text1=d["lst%s"%j][3][11:-4]
+            c=text1.split(maxsplit=1)
+            c1=c[1]
+            c2=c1.split(" ")
+            clientname1=""
+            for i in range(1,len(c2)):
+                if c2[i]=='WC':
+                    break;
+                clientname1+=c2[i]+" "
+            Activityreport(from1,emailid,clientname1,str(commonpath+d["lst%s"%j][3][11:]),"WCQ Activity","Failure",dt_string,comments)
+            time.sleep(3)
+            dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","Failure")
+            del d["lst%s"%j]
+            print("ok")
+    return index3,fast_track
+
+
+def blankmarket():#jdriverpathmatchexception():
+    index2=[]
+    for j in index1:
+        checking_list=[]
+        index_market=d["lst%s"%j].index('Please create marketing summary:')
+        for i in range(index_market+1,len(d['lst%s'%j])):
+            checking_list.append(d["lst%s"%j][i])
+        if checking_list:
+            index2.append(j)
+        elif not checking_list:
+            x=d['lst%s'%j][0].index("<")
+            y=d['lst%s'%j][0].index(">")
+            can1=d["lst%s"%j][0][:x]
+            can2=d["lst%s"%j][0][x+1:y]
+            body = "Hi "+str(can1)+",\n\nBot failed to complete WCQ Activity process. Bot  couldn’t find carrier details under Market Summary section in WCQ email.\nJ drivepath: "+str(commonpath+d["lst%s"%j][3][11:])+"\n\nThank You\nJanice"
+            SUBJECT = "BOT Failed To Process WC Quote Bot"
+            import win32com.client
+            outlook = win32com.client.Dispatch('outlook.application')
+            mail = outlook.CreateItem(0)
+            mail.To = can2
+            mail.Subject =SUBJECT
+            #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+            mail.Body = body
+            #mail.Attachments.Add('c:\\sample.xlsx')
+            #mail.Attachments.Add('c:\\sample2.xlsx')
+#             mail.CC = 'KJSimmons@JGParker.com'
+            mail.Send()
+            from datetime import datetime
+
+# datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            comments="Bot threw an exception in WCQ Activity due to blank market summary"
+            status="Failure"
+            activitytype="WCQ Activity"
+            From=d["lst%s"%j][0]
+            i1=From.index("<")
+            from1=From[:i1]
+            emailid=From[i1+1:-1]
+            text1=d["lst%s"%j][3][11:-4]
+            c=text1.split(maxsplit=1)
+            c1=c[1]
+            c2=c1.split(" ")
+            clientname1=""
+            for i in range(1,len(c2)):
+                if c2[i]=='WC':
+                    break;
+                clientname1+=c2[i]+" "
+
+            Activityreport(from1,emailid,clientname1,str(commonpath+d["lst%s"%j][3][11:]),activitytype,status,dt_string,comments)
+            time.sleep(3)
+            dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","Failure")
+            del d["lst%s"%j]
+    return index2
+
+def copier():
+    import shutil
+    # Specify the path of the file you want to copy
+    file_to_copy = r"J:\Copier_Scans\Commercial Lines\Python_Test\pythonprojects\macroemailmovement\email movement.xlsm"
+    # Specify the path of the destination directory you want to copy to
+    destination_directory = r"J:\Copier_Scans\Commercial Lines\Python_Test\pythonprojects"
+    # Use the shutil.copy() method to copy the file to the destination directory
+    shutil.copy(file_to_copy, destination_directory)
+    
+    
+def delete_copier():
+    import os
+    try:
+        os.remove(r"J:\Copier_Scans\Commercial Lines\Python_Test\pythonprojects\email movement.xlsm")
+    except:
+        print("file not found")    
+
+
+def dairybackup():
+    from datetime import datetime
+    import win32com.client
+    current_date = datetime.now().date()
+    SUBJECT = str(current_date) + " Diary Calendar Reports backup"
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = "lohith_r@exdion.com"
+    mail.Subject = SUBJECT
+    mail.Body = "Please find the attached Dairy calendar reports backup."
+    mail.Attachments.Add(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx")
+    mail.Attachments.Add(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarBookKeepingReport.xlsx")
+    mail.CC = 'exdion4@jgparker.com'
+    mail.Send()
+    print("Diarycalendarbackupsent")
+    
+def bookkeepingreport():
+    import openpyxl
+    path =  r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+    wb_obj = openpyxl.load_workbook(path) 
+    l=[]
+    sheet= wb_obj.active 
+    for i,row in enumerate(sheet.iter_rows()):
+        if i==0:
+            continue;
+        elif row[6].value=="completed" or row[6].value=="Received":
+            l1=[]
+            for cell in row:
+                print(cell.value)
+                l1.append(cell.value)
+            l.append(l1)
+            #sheet.delete_rows(i+1)
+    wb_obj.save(path)
+
+    import openpyxl
+    import pandas as pd
+    path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarBookKeepingReport.xlsx"
+    wb_obj = openpyxl.load_workbook(path) 
+    sheet= wb_obj.active 
+    for info in l:
+        sheet.append(info)
+    wb_obj.save(path)
+    df1=pd.read_excel(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx")
+    indexes=df1[df1["Status"]=="Received"].index
+    df1.drop(indexes,inplace=True)
+    df1.set_index("CSR Name ",inplace=True)
+    df1.to_excel(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx")
+
+    import os.path
+    import win32com.client
+
+    try:
+        xlApp = win32com.client.DispatchEx('Excel.Application')
+        xlsPath = os.path.expanduser(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\pythonprojects\email movement.xlsm")    
+        # Open Excel file
+        wb = xlApp.Workbooks.Open(Filename=xlsPath)    
+        # Run the macro (adjust macro name if needed)
+        xlApp.Run('macroman')    
+        # Save the changes
+        wb.Save()    
+        # Close the workbook
+        wb.Close(SaveChanges=True)    
+        # Quit Excel
+        xlApp.Quit()
+
+        print("Macro ran successfully!")
+    except Exception as e:
+        print(f"Error found while running the Excel macro: {str(e)}")
+        xlApp.Quit()
+
+
+def carrierschedulereportexcel(l1,csr,clientname,effective,createddate,emailid,jdrive):
+    import openpyxl
+    import pandas as pd
+    xls=pd.ExcelFile(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\AppBotConfigurations_pythontest.xlsx")
+    df1=pd.read_excel(xls,"MarketSchedulingCalendar")
+    rating_carrier=[]
+    email_carrier=[]
+    index_1=l1.index('Rating Carriers:')
+    index_2=l1.index('Please email submissions to the following carriers:')
+    for i in range(index_1+1,index_2):
+        rating_carrier.append(l1[i])
+    index_4=l1.index('Email Carriers:')
+    index_5=l1.index('Please create marketing summary:')
+    for i in range(index_4+1,index_5):
+        email_carrier.append(l1[i])
+
+    path =r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx"
+    wb_obj = openpyxl.load_workbook(path) 
+    from datetime import datetime
+    now = datetime.now()
+    dt_string = now.strftime("%m/%d/%Y")
+    for i in rating_carrier:
+        #print(i)
+        expdate=expirationdate(effective,i)
+        #print(expdate,"ppppppppppp")
+        for j in range(len(df1)):
+            #print(j)
+            if str((df1["FullName"][j]).replace(" ","").lower())==str((i).replace(" ","").lower()) :
+                #print("ok")
+                sheet= wb_obj.active
+                max_row=sheet.max_row
+                sheet.cell(max_row+1,4).value=i
+                sheet.cell(max_row+1,3).value=df1["Carrier"][j]
+                sheet.cell(max_row+1,5).value="Yes"
+                sheet.cell(max_row+1,6).value=expdate[0]
+                sheet.cell(max_row+1,1).value=csr
+                sheet.cell(max_row+1,2).value=clientname
+                sheet.cell(max_row+1,7).value="New"
+                sheet.cell(max_row+1,8).value=dt_string
+                sheet.cell(max_row+1,13).value=effective
+                sheet.cell(max_row+1,11).value=emailid
+                sheet.cell(max_row+1,10).value=jdrive
+                wb_obj.save(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx")
+                break;
+    for i in email_carrier:
+        expdate=expirationdate(effective,i)
+        from datetime import datetime
+        date_time_obj = datetime.strptime(expdate[0], '%m/%d/%Y')
+        from datetime import datetime, timedelta
+        d = date_time_obj  - timedelta(days=1)
+        expdate[0]=d.strftime("%m/%d/%Y")
+
+        for j in range(len(df1)):
+            if str((df1["FullName"][j]).replace(" ","").lower())==str((i).replace(" ","").lower()) :
+                sheet= wb_obj.active
+                max_row=sheet.max_row
+                sheet.cell(max_row+1,4).value=i
+                sheet.cell(max_row+1,3).value=df1["Carrier"][j]
+                sheet.cell(max_row+1,5).value="No"
+                sheet.cell(max_row+1,7).value="New"
+                sheet.cell(max_row+1,6).value=expdate[0]
+                sheet.cell(max_row+1,1).value=csr
+                sheet.cell(max_row+1,2).value=clientname
+                sheet.cell(max_row+1,8).value=dt_string
+                sheet.cell(max_row+1,13).value=effective
+                sheet.cell(max_row+1,11).value=emailid
+                sheet.cell(max_row+1,12).value=df1["Under Writer Email"][j]
+                sheet.cell(max_row+1,10).value=jdrive
+                wb_obj.save(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx")
+                break;
+#str((df_expiration["FullName"][90]).replace(" ","")).lower()==str((vins[3]).replace(" ","").lower()) and str((df_expiration["ExpirationType"][j]).replace(" ","").lower())=="days":                
+#try:
+def expirationdate(effectivedate,name):
+    vinsexpire=[]
+    import pandas as pd
+    xls=pd.ExcelFile(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\AppBotConfigurations_pythontest.xlsx")
+    df1=pd.read_excel(xls,"MarketSchedulingCalendar")
+    for j in range(len(df1)):
+        if str((df1["FullName"][j]).replace(" ","").lower())==str((name).replace(" ","").lower()) and str((df1["ExpirationType"][j]).replace(" ","").lower())=="days":
+            import datetime
+            v1=datetime.datetime.strptime(effectivedate,"%m/%d/%Y")
+            v2=v1-datetime.timedelta(days=int(df1["Duration"][j]))
+            from datetime import datetime
+            vinayak=v2.strftime("%m/%d/%Y")
+            vinsexpire.append(vinayak)
+        elif str((df1["FullName"][j]).replace(" ","").lower())==str((name).replace(" ","").lower()) and str((df1["ExpirationType"][j]).replace(" ","").lower())=="months":
+            import datetime 
+            v1= datetime.datetime.strptime(effectivedate, "%m/%d/%Y")
+            import dateutil.parser
+            v2= dateutil.relativedelta.relativedelta(months=int(df1["Duration"][j]))
+            v22=v1-v2
+
+            from datetime import datetime
+            inner=v22.strftime("%m/%d/%Y")
+            vinsexpire.append(inner)
+
+    return vinsexpire 
+#str((df_expiration["FullName"][90]).replace(" ","")).lower()==str((vins[3]).replace(" ","").lower()) and str((df_expiration["ExpirationType"][j]).replace(" ","").lower())=="days":
+
+def expirationdatetable(effectivedate,vins):
+    import pandas as pd
+    xls=pd.ExcelFile(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\AppBotConfigurations_pythontest.xlsx")
+    df_expiration=pd.read_excel(xls,"MarketSchedulingCalendar")
+    expirationdate=[]
+    for i in vins:
+        for j in range(len(df_expiration)):
+            if str((df_expiration["FullName"][j]).replace(" ","")).lower()==str((i).replace(" ","").lower()) and str((df_expiration["ExpirationType"][j]).replace(" ","").lower())=="days":
+                import datetime
+                d1=datetime.datetime.strptime(effectivedate,"%m/%d/%Y")
+                import datetime
+                d2=d1-datetime.timedelta(days=int(df_expiration["Duration"][j]))
+                from datetime import datetime
+                d3=d2.strftime("%m/%d/%Y")
+                expirationdate.append(d3)
+                break;
+            elif str((df_expiration["FullName"][j]).replace(" ","")).lower()==str((i).replace(" ","").lower()) and str((df_expiration["ExpirationType"][j]).replace(" ","").lower())=="months":
+                import datetime 
+                d1= datetime.datetime.strptime(effectivedate, "%m/%d/%Y")
+                import dateutil.parser
+                d2= dateutil.relativedelta.relativedelta(months=int(df_expiration["Duration"][j]))
+                d22=d1-d2
+
+                from datetime import datetime
+                d3=d22.strftime("%m/%d/%Y")
+                print("months:",d3)
+                expirationdate.append(d3)
+                break;
+    df_last_table=pd.DataFrame(zip(vins,expirationdate))
+    return df_last_table
+def todaysdatezeroformat():
+    import datetime
+
+    from datetime import datetime
+    todaydate=datetime.today()
+    print(todaydate,"todays format")
+    dt_object2 = datetime.strftime(todaydate, "%m/%d/%Y %H:%M:%S ")
+    dt_object2 = datetime.strftime(todaydate, "%m/%d/%Y %H:%M:%S ")
+    dt_object3=dt_object2.replace(dt_object2[11:],"00:00:00")
+    dt_object4= datetime.strptime(dt_object3, "%m/%d/%Y %H:%M:%S")
+    return dt_object4
+#its just update in excel for in paryicular format 
+def todaystr():
+    from datetime import datetime
+    todaydate=datetime.today()
+    from datetime import datetime
+    tod= todaydate.strftime("%m/%d/%Y")
+    return tod
+
+
+#it will create the market summary for if get wcq activity #malli 
+def marketsummary(l1,clientname,effective_date,path1,var1,var2,var3,var4,nothing,var5):
+    index_1=l1.index('Rating Carriers:')
+    index_2=l1.index('Please email submissions to the following carriers:')
+    vins=[]
+    for i in range(index_1+1,index_2):
+        vins.append(l1[i])
+
+    index_4=l1.index('Email Carriers:')
+
+    index_5=l1.index('Please create marketing summary:')
+
+    for i in range(index_4+1,index_5):
+        vins.append(l1[i])
+   # import pandas as pd
+    import pandas as pd
+    xls=pd.ExcelFile(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\AppBotConfigurations_pythontest.xlsx")
+    df_expir=pd.read_excel(xls,"MarketSchedulingCalendar")
+    expirationdate=[]
+    vins0=[]
+    for i in vins:
+        for j in range(len(df_expir)):
+            if df_expir["FullName"][j].replace(" ","").lower()==i.replace(" ","").lower():
+                vins0.append(df_expir["Carrier"][j])
+                break;
+
+
+    l=(index_2-index_1)-1
+    vins2=[]
+    for i in range(len(vins0)):
+        if i<(l):
+            sam1=vins0[i].replace(" ","")
+            sam11=sam1.lower()
+            vins2.append(sam11+"_daterated")
+        else:
+            vins2.append(" ")
+    vins3=[]
+    k=(index_5-index_4)-1
+    j=len(vins0)-k
+    lastlength=j
+    for i in range(len(vins)):
+        if i>=j:
+            sam0=vins0[i].replace(" ","")
+            sam01=sam0.lower()
+            vins3.append(sam01+"_datesent")
+        else:
+            vins3.append(" ")
+
+    import pandas as pd
+    index12=[i for i in range(len(vins0))]
+    df=pd.DataFrame(index12,columns=['Summary'])
+    df['Market']=vins0
+    df["email"]=vins3
+    df["quotes"]=vins2
+    df["notes"]=""
+
+    df_lasttable=expirationdatetable(effective_date,vins)
+    if len(df_lasttable)==len(df):
+        for i in range(lastlength,len(df)):
+            dfdate1=(df_lasttable[1][i])
+            from datetime import datetime
+            date_time_obj = datetime.strptime(dfdate1, '%m/%d/%Y')
+            from datetime import datetime, timedelta
+            d = date_time_obj  - timedelta(days=1)
+            dfdate11=d.strftime("%m/%d/%Y")
+            df_lasttable[1][i]=dfdate11
+    print(df_lasttable,"TTTTTTTTTTTTTTTTTTTEEEEESSSSSSSTTTTTTTTT")
+
+    import selenium
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.common.by import By
+    import time
+    import pandas as pd
+    import sqlite3
+    res1 = True
+    try:   
+        import selenium
+        from selenium import webdriver
+        from selenium.webdriver.common.keys import Keys
+        from selenium.webdriver.support import expected_conditions as EC
+        from selenium.webdriver.common.by import By
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.chrome.service import Service
+        from webdriver_manager.chrome import ChromeDriverManager
+        from selenium.webdriver.chrome.options import Options
+        import time
+        chrome_options = Options()
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        driver_path = ChromeDriverManager().install()
+        service = Service(driver_path)
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+        driver.maximize_window()
+        driver.get("https://appulate.com/signin")        
+        driver.implicitly_wait(10)        
+        time.sleep(3)
+        driver.find_element(By.XPATH,"/html/body/main/form/div[1]/div/div/div/input").send_keys("exdion@jgparker.com")#exdion@jgparker.com
+       
+        driver.find_element(By.XPATH,"/html/body/main/form/div[2]/div/div/div/input").send_keys("8azGdj3jcthG18")
+        
+        driver.find_element(By.XPATH,"/html/body/main/form/div[4]/button/span").click()
+        time.sleep(6)
+
+
+    except:
+        subject1="BOT Failed To Process WC Quote Bot"
+        body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot failed to login to Appulate.\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice" 
+        csr=var2
+        email_function(subject1,body1,csr)
+        time.sleep(4)
+        from datetime import datetime
+
+# datetime object containing current date and time
+        now = datetime.now()
+        dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+        Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"Bot found exception in login credentials")
+        time.sleep(3)
+        dummyexcel(nothing,"WCQ Activity","Failure")
+        time.sleep(4)
+        print("datetime object containing current date and time")
+#         driver.quit()
+        res1=False
+        return res1
+
+    if res1:
+        res2=True
+        try:
+            time.sleep(2)            
+            cutdown=False
+            customer_inbox=driver.find_element(By.XPATH,'//input[@type="text"]')
+            customer_inbox.clear()
+            time.sleep(3)
+            customer_inbox.send_keys(clientname)
+            print("the Clientname is ", clientname )
+            customer_inbox.submit()
+#             search_button = driver.find_element(By.XPATH,"/html/body/div[2]/div[2]/main/div[2]/div/div[1]/div[1]/form/button[2]")
+#             search_button.click()
+            button = driver.find_element(By.CLASS_NAME, "search-input-box__search-button")
+            button.click()
+            time.sleep(3)
+            
+            try:
+                from selenium.webdriver.support.ui import WebDriverWait 
+                from selenium.webdriver.common.by import By 
+                # element = driver.find_element(By.CSS_SELECTOR,'.insured-grid-insured-status-icon--prospect')
+                element = driver.find_element(By.CSS_SELECTOR,'.insured-grid-insured-type-icon')
+                element.click() 
+                time.sleep(3) 
+                link = driver.find_element(By.LINK_TEXT, "Workers' Compensation") 
+                request = driver.find_element(By.CLASS_NAME, "insured-grid-policy-row__policy-description") 
+                # Check conditions using OR 
+                if link.text == "Workers' Compensation" or request.text == "Continue": 
+                    # Click the link 
+                    link.click()
+                    time.sleep(3)
+            except:
+                print("BOT failed to click on worker comp") 
+
+
+            try:                                           
+                quote_request=driver.find_element(By.XPATH,"/html/body/div/div[2]/main/div/div[1]/div/div[1]/div[2]/span")
+                quote_request.click()                    
+                time.sleep(3)
+                b=driver.find_element(By.CLASS_NAME,'tippy-content')
+                #/html/body/div/div[2]/main/div/div[1]/div/div[1]/div[2]/span/svg
+                #//*[@id="tippy-11"]/div/div/div/button[1]/span
+                b.text
+                words = b.text.split()
+                words
+                for word in words:
+                    print(word)
+                    if word == "Forms":
+                        print("ok")                   
+                        driver.find_element(By.XPATH,'//button[@data-qa-page-switch-action="rfq-forms"]').click()
+                time.sleep(3)
+            except:    
+                quote_request=driver.find_element(By.XPATH,"/html/body/div/div[2]/main/div/div[1]/div/div[1]/div[2]/span")
+                quote_request.click()                    
+                time.sleep(3)
+                b=driver.find_element(By.XPATH,'//div[@class="tippy-box ds-context-menu__dropdown ds-context-menu__dropdown--selectable"]')
+                b.text
+                words = b.text.split()
+                words
+                for word in words:
+                    print(word)
+                    if word == "Forms":
+                        print("ok")
+                        driver.find_element(By.XPATH,'//button[@data-qa-page-switch-action="rfq-forms"]').click()
+                        time.sleep(3)        
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. BOT failed to click on Forms tab .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice" 
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed to click on Forms")
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+
+        try:
+            for i in range(1,20):
+                try:
+                    x=driver.find_element(By.XPATH,f'/html/body/div/div[2]/main/div/div[2]/div/div[2]/div[{i}]/div[2]/div/button')
+                    print(x.text)  # 
+                    if str(x.text)==str("ACORD 130 CA"):
+                        quote_request=driver.find_element(By.XPATH,f'/html/body/div/div[2]/main/div/div[2]/div/div[2]/div[{i}]/div[1]/div/label/span/span')
+                        quote_request.click()
+                        Edit=driver.find_element(By.XPATH,f'/html/body/div/div[2]/main/div/div[2]/div/div[1]/div[2]/button[1]/span/span')
+                        Edit.click()                             #/html/body/div/div[2]/main/div/div[2]/div/div[1]/div[{i}]/button[1]
+                        break   
+                except:
+                    pass
+                
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot failed click on ACORD130CA .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice" 
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed click on ACORD130CA")
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+
+        try:
+            Applicant=driver.find_element(By.XPATH,"//*[@id='questionnaire-edit']/div/div/div[2]/div[1]/div[25]/div[2]/div/div/div/div/div/div/input")
+            if Applicant.get_property("value")=="":
+                subject1="BOT Failed To Process WC Quote Bot"
+                body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot couldn't find Applicant name in Appulate.\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice"
+                csr=var2
+                print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    #                 email_function(subject1,body1,csr)
+                driver.quit()
+                time.sleep(4)
+                from datetime import datetime
+                print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+        # datetime object containing current date and time
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+                Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"Bot couldn't find Applicant name in Appulate")
+                #time.sleep(4)
+                time.sleep(3)
+                dummyexcel(nothing,"WCQ Activity","Failure")
+
+
+                print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+                res2=False
+                return res2
+        except:
+            print("nothing1")
+
+        try:
+            for i in range(5, 11):
+                if i % 3 == 0:
+                    time.sleep(2)
+                    driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[1]/div/div/div/div[1]/div/div['+str(i)+']/button/span').click()
+
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot failed to click on next button in Appulate .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice"
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed to click on next button  in Appulate")
+            #time.sleep(4)
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+
+
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+        try:
+            time.sleep(3)
+            state_rating_worksheet=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[1]/div/div/div/div[1]/div/div[9]/button/span')
+            state_rating_worksheet.click()
+            time.sleep(3)
+            row=driver.find_elements(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]/div[2]/div/div/div/div/div/div[2]/div/div[2]/table/tbody/tr")
+            len(row)
+            col=driver.find_elements(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]/div[2]/div/div/div/div/div/div[2]/div/div[2]/table/tbody/tr[1]/td")
+            len(col)
+            values1=[]
+            for r in range(2,len(row)):
+                var=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]/div[2]/div/div/div/div/div/div[2]/div/div[2]/table/tbody/tr["+str(r)+"]/td[4]")
+                values1.append(var.text)
+            time.sleep(3)
+
+            values2=[]
+            for r in range(2,len(row)):
+                var=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]/div[2]/div/div/div/div/div/div[2]/div/div[2]/table/tbody/tr["+str(r)+"]/td[9]")
+                values2.append(var.text)
+            values2
+            import pandas as pd
+            df10=pd.DataFrame(list(zip(values1,values2)),columns=["class code","payroll"])
+            df10=df10.to_string(index=False)
+            time.sleep(3)
+            nexts=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[1]/div/div/div/div[1]/div/div[10]/button/span")
+            nexts.click()
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot couldn't navigate to premium tab in Appulate .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice"
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(3)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed to click on next button  in Appulate")
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+
+
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+
+        #//*[@id="questionnaire-edit"]/div/div/div[2]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr[2]/td[4]
+                                                       #  //*[@id='questionnaire-edit']/div/div/div[2]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr[2]/td[4]"
+
+        try:
+            time.sleep(3)
+            exmodification=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[4]")
+            print(exmodification.text)
+            if  exmodification.text=="":
+                print("ok")
+                time.sleep(4)
+                driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[2]").click()
+                time.sleep(3)
+                drive=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[3]/td/div/div[7]/div[1]/div/div/div[2]/div/span")
+                if drive.text=="Experience Or Merit Modification - Factor":
+                    print(drive.text)
+                    print("okkkkkkkkkkkkkkkkkk")
+                    drive1=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[3]/td/div/div[7]/div[2]/div/div/div/div/div/div/input")
+                    drive1.send_keys("1.00")
+                    time.sleep(2)
+                    driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[2]").click()
+            elif float(exmodification.text)<=0: 
+                print("lesser than 1")
+                driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[2]").click()
+                time.sleep(3)
+                drive=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[3]/td/div/div[7]/div[1]/div/div/div[2]/div/span")
+                if drive.text=="Experience Or Merit Modification - Factor":
+                    print(drive.text)
+                    print("okkkkkkkkkkkkkkkkkk")
+                    drive1=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]/div[2]/div/div[1]/div/div/div/div[2]/div/div[2]/table/tbody/tr[3]/td/div/div[7]/div[2]/div/div/div/div/div/div/input")
+                    drive1.send_keys("1.00")
+                    time.sleep(2)
+
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot failed since there is no XMOD data to update .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice" 
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed since there is no XMOD data to update")
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+
+
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+
+        try:
+            next_button = driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[1]/div/div/div/div[1]/div/div[11]/button/span")
+            next_button.click()
+            time.sleep(3)
+            year=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[2]')
+            years1=str(int(year.text)+1)
+            carrier=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[3]')
+            carr=carrier.text
+            premium=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[5]")
+            prem=premium.text
+            try:
+                XMOD=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[6]')
+                xmod=str(float(XMOD.text)*100)
+            except:
+                XMOD=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/table/tbody/tr[2]/td[6]')
+                xmod=str(XMOD.text)
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot couldn't extract prior loss information  in Appulate .\nJ drivepath: "+str(var4)+"\n\n\nThank You,\nJanice"
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"Bot couldn't extract prior loss information  in Appulate ")
+            #time.sleep(4)
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+
+
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+        try:
+            print("hHHHHHHHHHHHHHHHHTESSSSSTTTTTTTTTTTTTTTTTTTTTT")
+            time.sleep(3)
+            yesits=prem +" XMOD "+""+years1+" "+xmod
+            print("yesitsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+            driver.quit()
+            from docx import Document
+            from docx.shared import RGBColor
+            from docx import Document
+            from docx.shared import Pt
+            from docx.shared import RGBColor
+            from docx import Document
+            from docx.shared import Inches
+
+            time.sleep(3)
+
+            doc = Document(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\MeredithS_Scans\marketingsummm.docx")
+            doc.tables 
+            doc1=doc.tables[0]
+            mycell=doc1.cell(0,2)
+
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run(clientname)
+            
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+            time.sleep(3)
+            mycell=doc1.cell(4,3)
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run(yesits)
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+            time.sleep(3)
+            mycell=doc1.cell(5,4)
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run("WC")
+            
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+            time.sleep(3)
+            mycell=doc1.cell(3,3)
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run(carr)            
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+
+
+            time.sleep(3)
+            mycell=doc1.cell(0,9)
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run(effective_date)
+           
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(11)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+            
+            mycell=doc1.cell(1,8)
+            my_paragraph = mycell.paragraphs[0]
+            run1 = my_paragraph.add_run("Renewal")
+            run1.italic=True
+            font=run1.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run1.font.color.rgb = blue
+            time.sleep(3)
+
+            mycell=doc1.cell(4,8)
+            my_paragraph = mycell.paragraphs[0]
+            run2= my_paragraph.add_run((str(df10)))
+            run2.italic=True
+            font=run2.font
+            font.size= Pt(13)
+            blue= RGBColor(0x42, 0x24, 0xE9)
+            run2.font.color.rgb = blue
+
+
+
+            doc1=doc.tables[1]
+            for i in range(df.shape[0]):
+                doc1.add_row()
+            mycell=doc1.cell(0,2)
+            print(mycell.text)
+            for i in range(df.shape[0]):
+                mycell1=doc1.cell(i+1,0)
+                my_paragraph=mycell1.paragraphs[0]
+                run2=my_paragraph.add_run(str(i+1))
+                run2.bold=True
+                run2.italic=False
+                font=run2.font
+                font.size= Pt(13)
+                blue= RGBColor(0x42, 0x24, 0xE9)
+                font.name="Times New Roman"
+                for j in range(1,df.shape[-1]):
+                    mycell1=doc1.cell(i+1,j)
+                    my_paragraph=mycell1.paragraphs[0]
+                    run2=my_paragraph.add_run(str(df.values[i,j]))
+                    run2.italic=True
+                    font=run2.font
+                    font.size= Pt(13)
+                    blue= RGBColor(0x42, 0x24, 0xE9)
+                    run2.font.color.rgb = blue
+    
+
+            def remove_row(table, row):
+                tbl = table._tbl
+                tr = row._tr 
+                tbl.remove(tr)
+            row = doc1.rows[i+2]
+            remove_row(doc1, row)
+
+            doc1=doc.tables[3]
+
+            for i in range(df_lasttable.shape[0]):
+                doc1.add_row()
+            mycell=doc1.cell(0,2)
+            print(mycell.text)
+            for i in range(df_lasttable.shape[0]):
+                for j in range(df_lasttable.shape[-1]):
+                    mycell1=doc1.cell(i+1,j)
+                    my_paragraph=mycell1.paragraphs[0]
+                    run2=my_paragraph.add_run(str(df_lasttable.values[i,j]))
+                    run2.italic=False
+                    font=run2.font
+                    font.size= Pt(12)
+                   
+                    font.name='Times New Roman'
+            
+            print("dddddddddddddddddddddddddddoooooooooooooooooooocccccccccuuuuuuummmmmmmmmmmmmmmmmmeeeeeenttttttttttt")
+
+            
+            depath=dynamicpaths123(var4)
+            print(var4,"llllllllll",depath)
+            doc.save(depath + "\\" + years1 + " WC Marketing Summary.docx")        
+            res2=True
+            return res2
+        except:
+            subject1="BOT Failed To Process WC Quote Bot"
+            body1="Hi "+str(var1)+",\n\nBot failed to complete WCQ Activity process. Bot failed to create Marketing Summary.\nJ drivepath:"+str(var4)+"\n\n\nThank You,\nJanice" 
+            csr=var2
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            #email_function(subject1,body1,csr)
+            driver.quit()
+            time.sleep(4)
+            from datetime import datetime
+            print("lllllllllllllllllllllllllllllllllllllllllllll")
+
+    # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+
+            Activityreport(var5,var2,var3,var4,"WCQ Activity","Failure",dt_string,"BOT failed to create Marketing Summary ")
+            #time.sleep(4)
+            time.sleep(3)
+            dummyexcel(nothing,"WCQ Activity","Failure")
+            print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            res2=False
+            return res2
+
+def email_function(subject1,body1,csr):
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To =csr
+    mail.Subject = subject1
+    #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+    mail.Body = body1
+#   mail.Attachments.Add(wordpath)
+    #mail.Attachments.Add('c:\\sample2.xlsx')
+#     mail.CC ='KJSimmons@JGParker.com'#"bharat_raaj@exdion.com"##
+    mail.Send()
+    
+def email_function_attachement(subject1,body1,csr,wordpath):
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = csr
+    mail.Subject = subject1
+    #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+    mail.Body = body1
+    mail.Attachments.Add(wordpath)
+    #mail.Attachments.Add('c:\\sample2.xlsx')
+    #mail.CC ='KJSimmons@JGParker.com'
+    mail.Send() 
+    
+def email_function_request(subject1, body1, csr, cc=None, cc1=None):
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = csr
+    mail.Subject = subject1
+    mail.Body = body1
+    if cc:
+        mail.CC = cc
+    if cc1:
+        mail.CC += ';' + cc1
+    mail.Send() 
+    
+def email_function_riminder(subject1,body1,csr):
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = csr
+    mail.Subject = subject1
+    #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+    mail.Body = body1
+    #mail.Attachments.Add('c:\\sample.xlsx')
+    #mail.Attachments.Add('c:\\sample2.xlsx')
+    #mail.CC ='KJSimmons@JGParker.com'#"bharat_raaj@exdion.com"##
+    mail.Send()
+    
+def worddocument(path9,path8):
+    from docx import Document
+    from docx.shared import Inches
+    document = Document()
+    p = document.add_paragraph()
+    r = p.add_run()
+    r.add_text('please find attached screenshots of the websites')
+    r.add_picture(path8, width=Inches(7.08),height=Inches(3.78))
+    document.save(path9)     
+    
+def Activityreport(csrname,csremail,clientname,jdrivepath,activitytype,status,receiveddate,comments): 
+    import openpyxl
+    path=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\ActivityReport_py.xlsx"
+    # r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\ActivityReport_py.xlsx"
+    wb_obj=openpyxl.load_workbook(path)
+    sheet=wb_obj['Data Sheet']
+    max_row = sheet.max_row
+    print(max_row)
+    sheet.cell(max_row+1,1).value=csrname
+    sheet.cell(max_row+1,2).value=csremail
+    sheet.cell(max_row+1,3).value=clientname
+    sheet.cell(max_row+1,4).value=jdrivepath
+    sheet.cell(max_row+1,5).value=activitytype
+    sheet.cell(max_row+1,6).value=status
+    sheet.cell(max_row+1,7).value=receiveddate
+    sheet.cell(max_row+1,8).value=comments
+    wb_obj.save(path)
+def dummyexcel(jdrive,subject,status):
+    import openpyxl
+    path=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\dummy_pythontest.xlsx"
+    wb_obj=openpyxl.load_workbook(path)
+    sheet=wb_obj.active
+    max_row = sheet.max_row
+    print(max_row)
+    sheet.cell(max_row+1,1).value=jdrive
+    sheet.cell(max_row+1,2).value=subject
+    sheet.cell(max_row+1,3).value=status
+    wb_obj.save(path)
+
+#macrorun(s)carrierschedulereporttrigger()Activityreporttrigger()
+def macrorun(s):
+    if s==1:
+        app="countfailuresuccess"
+    elif s==2:
+        app="deletedata"
+    elif s==3:
+        app="deleteemptyrows"
+    #MailFolder()
+
+    import os.path
+    import win32com.client
+    try:
+        xlApp = win32com.client.DispatchEx('Excel.Application')
+        xlsPath = os.path.expanduser(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\pythonprojects\ActiveReport.xlsm")
+        wb = xlApp.Workbooks.Open(Filename=xlsPath)
+        xlApp.Run(app)
+        wb.Save()
+        xlApp.Quit()
+        print("Macro ran successfully!")
+    except:
+        print("Error found while running the excel macro!")
+        xlApp.Quit()
+def carrierschedulereporttrigger():
+    time.sleep(4)
+    from datetime import date
+
+    today = date.today()
+    yesterday = today# - timedelta(days = 1)
+
+    now=yesterday.strftime("%m%d%y")
+    df1=pd.read_excel(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx")
+    df1.to_excel(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\dummy_"+str(now)+".xlsx")
+    SUBJECT = "run now  "
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To = "lohith_r@exdion.com"
+    mail.Subject = SUBJECT
+    #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+    mail.Body =  "Please find attached Carrier scheduler records for processing."
+    print("okk")
+    mail.Attachments.Add(r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\dummy_"+str(now)+".xlsx")
+#     mail.Attachments.Add('c:\\sample2.xlsx')
+    mail.CC = 'exdion4@jgparker.com'
+    mail.Send()
+    print("sent")
+
+
+    time.sleep(8)
+    df=pd.read_excel(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx")
+    df.set_index("CSR Name",inplace=True)
+    df.drop(df.index,inplace=True)
+    df.to_excel(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\CarrierSchedulerReport_pythontest.xlsx")
+
+def Activityreporttrigger():
+    time.sleep(4)
+    import openpyxl
+    path=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\ActivityReport_py.xlsx"
+    # r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\ActivityReport_py.xlsx"
+    wb_obj=openpyxl.load_workbook(path)
+    from datetime import datetime
+    now = datetime.now() 
+    now= now.strftime("%m_%d_%Y") 
+    #now=yesterday.strftime("%m_%d_%y")
+    wb_obj.save(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\record activioty\ActivityReport_"+str(now)+".xlsx")
+    SUBJECT = "Activity report "
+    body = "Please find attached Activity Report."
+    import win32com.client
+    outlook = win32com.client.Dispatch('outlook.application')
+    mail = outlook.CreateItem(0)
+    mail.To ='KJSimmons@JGParker.com'
+    mail.Subject = SUBJECT
+    #mail.HTMLBody = '<h3>This is HTML Body</h3>'
+    mail.Body =  body
+    mail.Attachments.Add(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\record activioty\ActivityReport_"+str(now)+".xlsx")
+    #mail.Attachments.Add('c:\\sample2.xlsx')
+    mail.BCC = 'vijay_m@exdion.com'
+    mail.Send()
+    time.sleep(4)
+
+
+import psutil
+def kill_acrobat():
+    try:
+        process_name = 'Acrobat.exe'  # Acrobat Reader process name
+        for proc in psutil.process_iter(['pid', 'name']):
+            if proc.info['name'] == process_name:
+                pid = proc.info['pid']
+                psutil.Process(pid).terminate()
+                print(f"Terminated {process_name} process with PID {pid}.")
+    except psutil.NoSuchProcess as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        
+def killmsedge():
+    import psutil
+    for proc in psutil.process_iter():
+        try:
+            if proc.name() == "msedge.exe":
+                proc.kill()
+                time.sleep(2)
+        except:
+            print("Not killed ms edge")
+    time.sleep(3)
+               
+def killie():
+    try:
+        import wmi
+
+        name = 'Process_Name'
+        f = wmi.WMI()
+        for process in f.Win32_Process():
+            if process.name =="iexplore.exe":
+                process.Terminate()
+    except:
+        print("nothing ")
+def pythonemailmovement():
+    import openpyxl 
+    path1=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\dummy_pythontest.xlsx"
+    wb_obj = openpyxl.load_workbook(path1) 
+    sheet= wb_obj.active 
+    l=[]
+    for i,row in enumerate(sheet.iter_rows()):
+        if i==0:
+            continue;
+        if row[3].value=="completed":
+            continue;
+        import win32com.client
+
+        outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
+        inbox = outlook.GetDefaultFolder(6)
+        #donebox =r"C:\cancel"# outlook.GetDefaultFolder(6)
+        failname=outlook.GetDefaultFolder(6).Folders.Item("Process Failed")
+        sucessname=outlook.GetDefaultFolder(6).Folders.Item("Process Successful")
+        messages = inbox.Items
+        for message in reversed(messages):
+            #if message.unread==True:
+#             print(message.subject)
+            if message.subject==row[1].value:
+                body1=message.body
+                for i in body1.split("\r"):
+                    if "File Name" in i:
+                        x=i
+                        x=x.split("\r")
+                        if row[0].value in x[0]:
+                            print("ok")
+                           # message.UnRead = False
+                            if row[2].value=="Failure" :
+                                print(row[0].value,"IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+                                message.Move(failname)
+                                row[3].value="completed"
+                                wb_obj.save(path1)
+                            elif row[2].value=="success":
+                                print(row[0].value,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+                                message.Move(sucessname)
+                                row[3].value="completed"
+                                wb_obj.save(path1)
+    return "completed"
+
+import pandas as pd
+file_path = r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\AppBotConfigurations_pythontest.xlsx"
+sheet = 'ProductionManagers'  
+df2 = pd.read_excel(file_path, sheet_name=sheet)
+def get_manager_email(csr_name):
+    filtered_df = df2.loc[df2['CSR Name'] == csr_name, 'Manager Email']
+    if not filtered_df.empty:
+        manager_email = filtered_df.iloc[0]
+        return manager_email if not pd.isnull(manager_email) else ""
+    else:
+        return ""
+
+def reminder_mail_supplement():
+    import time
+    start_time = time.time()
+    import openpyxl
+    path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+
+    # To open the workbook  
+    # workbook object is created 
+    wb_obj = openpyxl.load_workbook(path) 
+    sheet= wb_obj.active 
+    #sheet.cell(row=2, column=2).value = 5  
+    todaydate=todaysdatezeroformat()
+    for i,row in enumerate(sheet.iter_rows()):
+        check=str(row[4].value)
+        if i==0:
+            continue;
+        elif row[6].value=="completed" or row[6].value=="Exception" or row[6].value=="Received" or check[:4]=="2019" or check[:4]=="2020":
+            continue;
+       # print(i,row[1].value)
+
+        created_date=0
+        created_date1=0
+        date10,date15,date20=0,0,0
+        try:
+            created_date=row[4].value
+       # print("created date",created_date)
+            from  datetime import datetime 
+            created_date1=datetime.strptime(created_date,"%m/%d/%Y")
+            #print("created_date1",created_date1)
+            import datetime
+            date10=created_date1+datetime.timedelta(days=10)
+            date15=created_date1+datetime.timedelta(days=15)
+            date20=created_date1+datetime.timedelta(days=20)
+            #print("+++++++++++++++++++10",date10,"---",date15,"----",date20,"------",created_date1)
+            from datetime import datetime
+            #todaydate=todaysdatezeroformat()
+        except:
+            #print("pppppppppppp")
+            created_date1=0
+            created_date1=row[4].value
+            #print("created_date1",created_date1)
+            import datetime
+            date10=created_date1+datetime.timedelta(days=10)
+            date15=created_date1+datetime.timedelta(days=15)
+            date20=created_date1+datetime.timedelta(days=20)
+            #print("+++++++++++++++++++10",date10,"---",date15,"----",date20,"------",created_date1)
+            from datetime import datetime
+        #print(row[1].value)
+        if todaydate==date10: 
+            print("labbbbbbbbbbb00000000000000000000000000000000000000000")
+            if row[7].value:
+                print(row[7].value)
+            else:
+                print("1111111111111111111111111111111111111111111111111111111")
+                body = "Second Request !\n\nTo date the Appulate Arrowhead supplemental application has not been completed for "+(row[3].value)+" .Please complete as soon as possible to continue the quoting process.\n\nThank you\nJanice"
+                SUBJECT = "Appulate Supplement Completion Second Request ! -"+str(row[1].value)
+                csr=row[5].value#"bharat_raaj@exdion.com"
+                email_function_riminder(SUBJECT,body,csr)
+                time.sleep(5)
+
+                import datetime
+                todaystrformat=todaystr()
+                row[7].value=todaystrformat
+                print("ok111111111111111111111111111111111111111111111111111111111111111")
+                row[6].value="phase 2"
+                wb_obj.save(path)
+                time.sleep(3)
+        elif todaydate==date15:
+            print("ooooooooooooooooooooooooooooooooooooooo")
+            if row[8].value:
+                print(row[8].value)
+            else:
+                SUBJECT = "Appulate Supplement Completion Third Request ! -"+str(row[1].value)
+                body = "Third Request !\n\nTo date the Appulate Arrowhead supplemental application has not been completed for "+(row[3].value)+".Please complete as soon as possible to continue the quoting process.\n\nThank you\nJanice"
+                csr=row[5].value
+                email_function_riminder(SUBJECT,body,csr)
+                        #time.sleep(5)
+
+                       # time.sleep(2)
+                import datetime
+                todaystrformat=todaystr()
+                row[8].value=todaystrformat
+                row[6].value="phase 3"
+                wb_obj.save(path)
+                time.sleep(3)
+        #time.sleep(8)
+        elif todaydate==date20:
+            print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+            if row[9].value:
+                print(row[9].value)
+            else:
+                print("333333333333333333333333333333333333333333333333333333333")
+                print(todaydate)
+                print(date20)
+                SUBJECT = "Appulate Supplement Completion Fourth and Final Request ! -"+str(row[1].value)
+                body = "Fourth and Final Request !\n\nTo date the Appulate Arrowhead supplemental application has not been completed for "+(row[3].value)+" .Please complete as soon as possible to continue the quoting process.\n\nThank you\nJanice"
+                csr=row[5].value         
+                csr_name = csr
+                manager_email = get_manager_email(csr_name)
+                manager_email
+                if (len(manager_email)) == 0:
+                    print("kokokokoko")
+                    email_function_request(SUBJECT, body, csr, cc="KJSimmons@JGParker.com")
+                    time.sleep(5)
+                else:
+                    print(manager_email)
+                    email_function_request(SUBJECT, body, csr, cc="KJSimmons@JGParker.com",cc1=manager_email)
+                    print("added prodction manager")
+                time.sleep(5)
+                time.sleep(2)
+                import datetime
+                todaystrformat=todaystr()
+                row[9].value=todaystrformat
+                row[6].value="phase4"
+                wb_obj.save(path)
+                time.sleep(3)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+def recordsofbookkeepingreport():
+    from datetime import datetime
+    now = datetime.now() 
+    now= now.strftime("%m_%d_%Y")
+    import openpyxl
+    path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+    wb_obj = openpyxl.load_workbook(path)
+    wb_obj.save(r"C:\Users\exdion3\Downloads\New folder (2)\dairy_calender_report"+str(now)+".xlsx")
+    time.sleep(2)
+    import openpyxl
+    path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarBookKeepingReport.xlsx"
+    wb_obj = openpyxl.load_workbook(path)
+    wb_obj.save(r"C:\Users\exdion3\Downloads\bookkeepingreport\bookkeepingreport"+str(now)+".xlsx") 
+try:
+    path8=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\screenshots\APP.png"
+    path9=r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_test_Bot\screenshots\APP.docx"
+    import webbrowser
+    #webbrowser.open_new(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\PaigeM_Scans\!Submissions\05_29 DP Mike's Evergreen Inc WC REN -@ mike effective\ok.pdf")
+    import win32com.client
+    #other libraries to be used in this script
+    import os
+    from datetime import datetime, timedelta
+    outlook = win32com.client.Dispatch('outlook.application')
+    mapi = outlook.GetNamespace("MAPI")
+    inbox = mapi.GetDefaultFolder(6)
+    messages = inbox.Items
+    time.sleep(4)
+except:
+    print("nothing")
+d={}
+j=0
+index1=[]
+print("ssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttaaaaaaaaaaaaaaaaaaaaaaarrrrrtttttt")
+for i in list(messages):
+    if i.Unread == True:
+        print(i)
+        print("SSSSSSSSSSSSSSSSs",i.subject)
+
+        if str((i.subject).lower().replace(" ",""))=="appactivity":
+           # webbrowser.open_new(r"\\JGPCOMMON\Home\Shared\Copier_Scans\Commercial Lines\Python_Test\NicholeF_Scans\!Submissions\05_21 DE A Z Storage LP WC MKT -@ something\ok.pdf")
+            fromapp=[]
+            From1=i.sender
+            vins=From1
+            print(vins,"vvvvvvvvvvvvvviiiiiiiiiiiiiiiinnnnnnnnnnnnnsssssssssss")
+            fromapp.append(From1)
+            from11=str(vins)
+            from12=from11.split(" ")
+            from1=from12[0]
+            if i.Class==43:
+                if i.SenderEmailType=='EX':
+
+                   # print(i.Sender.GetExchangeUser().PrimarySmtpAddress)
+
+                    emailid=i.Sender.GetExchangeUser().PrimarySmtpAddress
+                else:
+                    emailid=i.SenderEmailAddress
+                    print(emailid,"**********************")
+            i.unread=False
+            body=i.body
+            print(body)
+            print(vins,"llllllaaaaaaaaaaaaaxxxxxxxxxxxmmmmmmmmmmmiiiiiiiiiiii")
+            for item in body.split("\n"):
+                if "File Name" in item:
+                    print("*"*100)
+                    k=item.strip()
+                    text1=k
+                    for l,g in enumerate(str(text1[11:])):
+                        if g.isalpha():
+                            fi=l
+                            print(g)
+                            break;
+
+                    try:
+                        in_f=text1.index("@")
+                        text1=text1[11:in_f+1]
+                        print(text1,"okkkkkkkkkkkkkkkkkkkk1")
+                    except:
+                        text1=text1[11:]
+                        print(text1,"oooooooooooooooooooooo")
+
+
+
+                if "NAICS Code:" in item:
+                    print("*"*100)
+                    code=item.strip()
+                    #code=code.replace('<span style="margin:0px">',"")
+                    text2=""
+                    for i in code:
+                        if i.isdigit():
+                            text2+=i 
+                    print(text2)
+                if "Effective Date:" in item:
+                    print("*"*100)
+                    date1=item.strip()
+                   # date1=date1.replace('<span style="margin:0px">',"")
+                    for i in date1:
+                        if i.isdigit():
+                            id1=date1.index(i)
+                            break;
+                    text3=date1[id1:id1+10]
+                    print(text3)
+                    #app_activity.append(text1)
+                    time.sleep(4)
+
+            try:
+                if int(text2):
+                    print("ok")
+            except:
+                #if text2=="":
+                time.sleep(5)
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi  "+str(from1)+",\n\nBot failed to complete APP Activity process. Bot couldn't find NAICS code.\nJ drivepath: "+str(commonpath+text1)+"\n\n\nThank you,\nJanice"
+
+                csr=emailid
+                port=commonpath+text1
+                #screenshot
+                driver.save_screenshot(path8)
+                time.sleep(2)
+                worddocument(path9,path8) 
+                email_function_attachement(subject1,body1,csr,path9) 
+                c=text1.split(maxsplit=1)
+                c1=c[1]
+                c2=c1.split(" ")
+                clientname1=""
+                for i in range(1,len(c2)):
+                    if c2[i]=='WC':
+                        break;
+                    clientname1+=c2[i]+" "
+                from datetime import datetime
+
+    # datetime object containing current date and time
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,port,"App Activity","Failure",dt_string,"BOT couldn't find NAICS code")
+                time.sleep(3)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(4)
+                kill_acrobat()
+                continue;
+            try:
+                jdrive,jdrive1,referencepath=jdrivepath(text1)#deepak123
+                print(jdrive)
+            except:
+                print("vins text",text1)
+                time.sleep(5)
+                subject1="BOT Failed To Process APP BOT"
+                body1="Hi "+str(from1)+",\n\nBot failed to complete APP Activity process. Bot threw exception due to incorrect J drive path.\nJ drivepath: "+str(commonpath+text1)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+                email_function(subject1,body1,csr)
+                c=text1.split(maxsplit=1)
+                c1=c[1]
+                c2=c1.split(" ")
+                clientname1=""
+                for i in range(1,len(c2)):
+                    if c2[i]=='WC':
+                        break;
+                    clientname1+=c2[i]+" "
+                from datetime import datetime
+
+    # datetime object containing current date and time
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,commonpath+text1,"App Activity","Failure",dt_string," BOT threw exception due to incorrect J drive path")
+                time.sleep(3)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(4)
+                kill_acrobat()
+                continue;
+
+            try:
+                c=text1.split(maxsplit=1)
+                c1=c[1]
+                c2=c1.split(" ")
+                clientname1=""
+                for i in range(1,len(c2)):
+                    if c2[i]=='WC':
+                        break;
+                    clientname1+=c2[i]+" "
+                time.sleep(7)
+                import pyautogui
+                pyautogui.hotkey('win', 'down')
+                time.sleep(3)
+                acrobat = r"C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe"
+                printer_name="Appulate uplink"
+                pdffile=jdrive1
+                cmd = '"{}" /N /T "{}" "{}"'.format(acrobat, pdffile, printer_name)
+                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                time.sleep(4)
+                import win32com.client
+                shell = win32com.client.Dispatch("WScript.Shell")
+                import pyautogui
+                #pyautogui.hotkey('win', 'down')
+                time.sleep(4)
+                pyautogui.press("enter")
+                time.sleep(4)
+                pyautogui.press("enter")
+                time.sleep(6)    
+                import pyperclip
+                pyautogui.sleep(1)
+                pyautogui.hotkey('ctrl', 'l')
+                pyautogui.hotkey('ctrl', 'c')
+                appurl = pyperclip.paste()
+                print(appurl)
+                try:
+                    time.sleep(2)
+                    pyautogui.hotkey('ctrl', 'w')
+                except: 
+                    time.sleep(2)
+                    pyautogui.hotkey('ctrl', 'w')
+                    kill_acrobat()
+                    time.sleep(2)
+            except:
+                time.sleep(5)
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot failed to complete APP Activity process. Bot couldn't navigate to Appulate .\nJ drivepath: "+str(jdrive)+".\n\n\nThank you,\nJanice"
+                csr=emailid
+#                 email_function(subject1,body1,csr)
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"App Activity","Failure",dt_string,"Bot couldn't navigate to Appulate ")
+                time.sleep(3)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(4)
+                try:
+                    driver.quit()
+                except:
+                    print("")
+                kill_acrobat()
+                continue;
+            try:
+                import selenium
+                from selenium import webdriver
+                from selenium.webdriver.common.keys import Keys
+                from selenium.webdriver.support import expected_conditions as EC
+                from selenium.webdriver.common.by import By
+                from selenium.webdriver.support.ui import WebDriverWait
+                from selenium.webdriver.chrome.service import Service
+                from webdriver_manager.chrome import ChromeDriverManager
+                from selenium.webdriver.chrome.options import Options
+                chrome_options = Options()
+                chrome_options.add_argument("--disable-dev-shm-usage")
+                chrome_options.add_argument("--no-sandbox")
+                driver_path = ChromeDriverManager().install()
+                service = Service(driver_path)
+                driver = webdriver.Chrome(service=service, options=chrome_options)  
+                import time
+                driver.maximize_window()
+                driver.get(appurl)
+                driver.implicitly_wait(15)
+                time.sleep(7)
+                #username 
+                driver.find_element(By.XPATH,"/html/body/main/form/div[1]/div/div/div/input").send_keys("exdion@jgparker.com")#exdion@jgparker.com
+                #8azGdj3jcthG18
+                #password
+                driver.find_element(By.XPATH,"/html/body/main/form/div[2]/div/div/div/input").send_keys("8azGdj3jcthG18")
+                #login click
+                driver.find_element(By.XPATH,"/html/body/main/form/div[4]/button/span").click()
+                time.sleep(8)
+                continue1=driver.find_element(By.XPATH,"/html/body/div/div/div[3]/button/span/span").click()
+                time.sleep(9)
+                kill_acrobat()
+            except:
+                time.sleep(5)
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot failed to complete APP Activity process. Bot couldn't Login to Appulate.\nJ drivepath: "+str(jdrive)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+                #screenshot
+                driver.save_screenshot(path8)
+                time.sleep(2)
+                worddocument(path9,path8) 
+#                 email_function_attachement(subject1,body1,csr,path9)
+                time.sleep(4)
+                from datetime import datetime
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","Failure",dt_string,"BOT couldn't Login to Appulate")
+                #logout=driver.find_element(By.ID,"logout-button")
+                time.sleep(5)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(4)
+                kill_acrobat()
+                continue
+######################################################################################################################      
+
+            time.sleep(5)
+            try:
+               #/html/body/div[1]/div[1]/div/div/div[2]/div/div[1]/div/span/span
+                #/html/body/div[1]/div[1]/div/div/div[2]/div/div[1]/div/svg
+                #/html/body/div[1]/div[1]/div/div/div[2]/div/div[1]/div/svg
+                #/html/body/div/div[2]/main/div/div[1]/div/div[1]/div[2]/span/svg
+               wrk_comp=driver.find_element(By.XPATH,"/html/body/div[1]/div[1]/div/div/div[1]/div/div")
+               wrk_comp.click()
+               
+            except:
+                pass
+        
+            try:
+                time.sleep(5)
+                edit=driver.find_element(By.XPATH,"/html/body/div/div[2]/main/div/div[2]/div[1]/div[1]/button/span")  
+                edit.click()                     
+                time.sleep(4)
+                print("edit")
+                #/html/body/div/div[2]/main/div/div[2]/div[1]/div[1]/button/span
+            except:
+                pass                  
+                
+            try:              
+                client_namejgp=driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[1]/div[2]/div/div[1]/div/div/div/input').get_property("value")
+                print(client_namejgp)
+                
+                client=driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[1]/div[2]/div/div[1]/div/div/div/input').click()
+                name=driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[1]/div[2]/div/div[1]/div/div/div/input')
+
+                time.sleep(1)
+                name.clear()
+                name.send_keys(client_namejgp)      
+
+            except:
+                time.sleep(3)
+                from datetime import datetime
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot Failed to complete APP Activity process. BOT couldn't type into client name in Appulate.\nJ drivepath:"+str(jdrive)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+#                 email_function(subject1,body1,csr)
+                time.sleep(4)
+                
+
+              # datetime object containing current date and time
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","Failure",dt_string,"BOT couldn't type into client name in Appulate")
+                #logout=driver.find_element(By.ID,"logout-button")
+                time.sleep(3)
+                dummyexcel(text1,"App Activity","Failure")
+                driver.quit()
+                time.sleep(4)
+                kill_acrobat()
+                continue
+    
+            try:
+                for i in range(1,5):
+                    driver.find_element(By.XPATH,"//div/div/div/div/div/ul/li/a").click()
+                print(i)
+            except:
+                pass 
+
+            try:           
+                f=driver.find_element(By.XPATH,"//li/input")
+                f.click()
+                time.sleep(2)
+                f.send_keys(text2)
+                time.sleep(2)
+                f.send_keys(Keys.ENTER)
+            except:
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot Failed to complete APP Activity process as there was no matches found for NAICS code. \nJ drivepath:"+str(jdrive)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+#                 email_function(subject1,body1,csr)
+                time.sleep(4)
+            try:
+                save=driver.find_element(By.XPATH,"/html/body/div[2]/div/div/div[1]/div[3]/div/button[2]/span/span").click()   
+                save.click()                       
+                time.sleep(2)
+                print("save clicked")
+#                 try:
+#                     esc=driver.find_element(By.XPATH,"/html/body/div[5]/div/div/button")
+#                     esc.click()                    
+#                 except:
+#                     pass
+                
+            except:
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot Failed to complete APP Activity process as there was no matches found for NAICS code. \nJ drivepath:"+str(jdrive)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+#                 email_function(subject1,body1,csr)
+#                 driver.quit()
+                time.sleep(4)
+                kill_acrobat()
+                                    
+ ################################################################################  
+            try:
+                try:
+                    for i in range(2,5):               
+                        a=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[2]/div[2]/div["+str(i)+"]/h3").text
+                        if a=="Workers' Compensation":
+                            b=driver.find_element(By.XPATH,"//p[contains(.,'Quote request')]").text
+                            if b=="Request in Progress" or "Quote request":
+                                driver.find_element(By.XPATH,"//p[contains(.,'Quote request')]").click()           
+                                print("clicked on first request")
+                                break                
+                        else:
+                             for j in range(2,5):
+                                try:
+                                    r=driver.find_element(By.XPATH,"/html/body/div[1]/div[2]/main/div/div[2]/div[2]/div["+str(j)+"]/h3").text
+                                    r.split()  
+                                    for i in r:
+                                        if r=="Workers' Compensation":
+                                            print("clicked on Workers' Compensation")                 
+                                            r1=driver.find_element(By.XPATH,"//span[contains(.,'Request in Progress')]").text
+                                            if r1=="Request in Progress" or "Quote request":
+                                                driver.find_element(By.XPATH,"//div[3]/ul/li/div/p[2]").click()   
+                                                print("clicked on second request")
+                                                break
+                                except:
+                                    print("failed in both")
+                except:
+                    pass
+                    # a1=input("please select and give yes the required request quote")
+                    # if a1=="yes":                
+                    #     print("manually entered yes")                
+                try:                                        
+                    driver.find_element(By.XPATH,'//*[@id="markets-selector-grid"]/div[3]/div[1]/div/button/span').click()
+                    time.sleep(2)
+                    driver.find_element(By.XPATH,'/html/body/dialog/div/div/div/div[2]/div[1]/div/div/input').send_keys("Arrowhead General Insurance")
+                    time.sleep(2)
+                    # driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/label/span[2]/span/b').click()
+                    driver.find_element(By.XPATH,'html/body/dialog/div/div/div/div[2]/div[2]/div/div[2]/div/div/div[1]/div/label/span[2]/span/b').click()
+                    time.sleep(2)
+                    driver.find_element(By.XPATH,'/html/body/dialog/div/div/div/div[3]/div/button[2]/span/span').click()
+                    time.sleep(3)
+                    quote_request=driver.find_element(By.XPATH,"/html/body/div/div[2]/main/div/div[1]/div/div[1]/div[2]/span")
+                    quote_request.click()                        
+                    time.sleep(2)
+                    b=driver.find_element(By.CLASS_NAME,'tippy-content')
+                    b.text
+                    words = b.text.split()
+                    words
+                    for word in words:
+                        print(word)
+                        if word == "Forms":
+                            print("ok")
+                            driver.find_element(By.XPATH,'//button[@data-qa-page-switch-action="rfq-forms"]').click()
+                            print("Entered ok here")
+                            break
+                    time.sleep(4)                        
+                                        
+                except:
+                    # print("entered to add market")
+                    # add_market=driver.find_element(By.XPATH,'//*[@id="markets-selector-grid"]/div[3]/div[1]/div/button/span/span')
+                    # add_market.click()
+                    # time.sleep(2)
+                    # search=driver.find_element(By.CLASS_NAME,"ds-text-input__native-input")
+                    # search.send_keys("Arrowhead General Insurance")                                    
+                    # time.sleep(2)
+                    # print("sending arrowhed keys")
+                    # try:
+                    #     driver.find_element(By.XPATH,'/html/body/div[4]/div/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/label/span[1]/span').click()
+                    # except:
+                    #     print("check not found")
+                    # time.sleep(2)
+                    # try:            
+                    #     Market_add = driver.find_element(By.XPATH,'//span[@class="ds-button__text"][contains(text(), "Add 1 market")]')
+                    #     Market_add.click() 
+                    #     print("marked checked")  
+                    # except: 
+                    #      pass
+                    # time.sleep(4)
+                    # try:
+                    #     quote_request=driver.find_element(By.XPATH,"/html/body/div[2]/div[2]/main/div/div[1]/div/div[1]/div[2]/span")
+                    #     quote_request.click()                      
+                    #     time.sleep(2)
+                    #     b=driver.find_element(By.CLASS_NAME,'tippy-content')
+                    #     b.text
+                    #     words = b.text.split()
+                    #     words
+                    #     for word in words:
+                    #         print(word)
+                    #         if word == "Forms":
+                    #             print("ok")
+                    #         driver.find_element(By.XPATH,'//button[@data-qa-page-switch-action="rfq-forms"]').click()                                 
+                    #     time.sleep(3)    
+                    # except:
+                        pass   
+
+            except:
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot failed to complete APP Activity process. Bot couldn't find Worker Compensation in Appulate.\nJ drivepath: "+str(jdrive)+".\n\n\nThank you,\nJanice"
+                csr=emailid
+                #screenshot
+                driver.save_screenshot(path8)
+                time.sleep(2)
+                worddocument(path9,path8) 
+#                 email_function_attachement(subject1,body1,csr,path9)
+                time.sleep(8) 
+                driver.quit()
+                from datetime import datetime
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","Failure",dt_string,"BOT couldn't find Worker Compensation in Appulate")
+                time.sleep(2)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(2)
+                driver.quit()
+                kill_acrobat()
+                continue;
+            try:
+                print("Arrowhead sucess")
+              
+                for i in range(1,45):                              
+                    try:                                
+                        x=driver.find_element(By.XPATH,f'/html/body/div/div[2]/main/div/div[2]/div/div[2]/div[{i}]/div[2]/div/button')    #/html/body/div/div[2]/main/div/div[3]/div/div[2]/div[{i}]/div[2]/div/button
+                        print(x.text)   
+                        if str(x.text)==str("Arrowhead"):
+                            quote_request=driver.find_element(By.XPATH,f'/html/body/div/div[2]/main/div/div[2]/div/div[2]/div[{i}]/div[1]/div/label/span/span')
+                            quote_request.click()             
+                            lucky=True
+                            break   
+                    except:
+                        pass                    
+            except:
+                time.sleep(1)
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot Failed to complete APP Activity process. Bot couldn't find arrowhead record.\nJ drivepath:"+str(jdrive)+".\n\n\nThank you,\nJanice"
+                csr=emailid
+                #screenshot
+                driver.save_screenshot(path8)
+                time.sleep(2)
+                worddocument(path9,path8) 
+#                 email_function_attachement(subject1,body1,csr,path9) 
+                time.sleep(5) 
+                driver.quit()
+                from datetime import datetime
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","Failure",dt_string,"BOT couldn't find arrowhead record in appulate ")
+                time.sleep(3)
+                dummyexcel(text1,"App Activity","Failure")
+                time.sleep(3)
+                driver.quit()
+                kill_acrobat()
+                continue;
+                
+            try:                               
+                Email1=driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/main/div/div[2]/div/div[1]/div[2]/button[4]/span/span')
+                Email1.click()
+                time.sleep(2)
+                k=driver.find_elements(By.XPATH,"//div[@title='Select Contact']")
+                for i in range(len(k)):
+                    print(k[i].text)
+                    if k[i].text=="To":
+                        k[i].click()
+                        time.sleep(2)
+                        break;
+                s=driver.find_element(By.XPATH,"//input[@class='legacy-text-input m-e-to-text-input']")
+                v=s.get_property("id")
+#                 id0=int(v[1:])-3
+#                 id1=v[0]+str(id0)
+                id0=int(v[1:])
+                jd0=int(v[1:])+3
+                print(id0)
+                id1=v[0]+str(id0)
+                jd1=v[0]+str(jd0)
+                print(id1)   
+                
+                print(v)
+                time.sleep(1)
+                driver.find_element(By.ID,id1).send_keys(emailid)
+                time.sleep(2)
+                for i in range(len(k)):
+                    print(k[i].text)
+                    if k[i].text=="Cc":
+                        k[i].click()
+                        time.sleep(2)
+                        break;
+                time.sleep(2)
+                # driver.find_element(By.ID,jd1).send_keys(emailid)
+                # time.sleep(3)
+                # import pyautogui
+                # pyautogui.press("enter")
+                # time.sleep(1)
+                # pyautogui.press("space")                 
+                driver.find_element(By.ID,jd1).send_keys("exdion3@jgparker.com") 
+                time.sleep(2)
+                sub=driver.find_element(By.XPATH,"//div[@data-bind='click: onSubjectClick']")
+                sub.click()
+                time.sleep(2)
+                subinput=driver.find_element(By.XPATH,"//input[@data-bind='value: subject, hasFocus: uiState.subjectHasFocus']")
+                subinput.send_keys("James G Parker Insurance Associates wants you to fill out the application" )
+                time.sleep(2)               
+                try:
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    driver.switch_to.default_content()
+                    driver.switch_to.frame(0)                   
+                    body=driver.find_element(By.XPATH,"//body")
+                    time.sleep(3)
+                    body.send_keys("A")                   
+                    body.send_keys(Keys.CONTROL,'A')
+                    body.send_keys(Keys.DELETE)
+                    time.sleep(3)
+                    body.send_keys("Hi "+str(from1)+",\n\n Your App Activity request is completed successfully . Kindly review and update Appulate fields for pending information.\n\nThanks,\nJanice")
+                    time.sleep(2)
+                    driver.switch_to.default_content()
+                    time.sleep(5)   
+                    si=driver.find_element(By.XPATH,"//button[@class='g-button g-button--primary m-e-submit-dialog-btn']")                    
+                    si.click()
+                except:
+                    from selenium.webdriver.common.keys import Keys
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    pyautogui.press("tab")
+                    time.sleep(1)
+                    driver.switch_to.default_content()
+                    driver.switch_to.frame(0)
+                    time.sleep(3)
+                    body=driver.find_element(By.XPATH,'//body')
+                    body.send_keys("A")                   
+                    body.send_keys(Keys.CONTROL,'A')
+                    body.send_keys(Keys.DELETE)
+                    time.sleep(3)
+                    body.send_keys("Hi "+str(from1)+",\n\n Your App Activity request is completed successfully . Kindly review and update Appulate fields for pending information.\n\nThanks,\nJanice")
+                    time.sleep(2)
+                    driver.switch_to.default_content()
+                    si=driver.find_element(By.XPATH,"//button[@class='g-button g-button--primary m-e-submit-dialog-btn']")
+                    si.click()
+                    time.sleep(5)
+                    #os.system("taskkill /f /im chrome.exe")
+
+
+            except:
+                pass
+                time.sleep(5)
+                subject1="BOT Failed To Process APP Bot"
+                body1="Hi "+str(from1)+",\n\nBot failed to complete APP Activity process.Bot failed to send request Email.\nJ drivepath: "+str(jdrive)+"\n\n\nThank you,\nJanice"
+                csr=emailid
+               #screenshot
+                driver.save_screenshot(path8)
+                time.sleep(2)
+                worddocument(path9,path8) 
+                #email_function_attachement(subject1,body1,csr,path9)
+
+                time.sleep(5)
+                from datetime import datetime
+                now = datetime.now()
+                dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+                Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","Failure",dt_string,"BOT failed to send request Email")
+                #logout=driver.find_element(By.ID,"logout-button")
+                time.sleep(3)
+                dummyexcel(text1,"APP Activity","Failure")
+                #logout.click()
+                time.sleep(3)
+                #driver.quit()
+                time.sleep(4)
+                kill_acrobat()
+                continue
+
+
+            try:
+                time.sleep(4)
+                logout=driver.find_element(By.ID,"logout-button")
+                logout.click()
+                time.sleep(3)
+                os.system("taskkill /f /im chrome.exe")
+#                 complted email to bharat
+                subject1="BOT completed To Process APP Bot"
+                csr1="bharat_raaj@exdion.com"
+                body1="Hi "+str("Bharat")+",\n\nBot completed the APP Activity process please review.\nJ drivepath:"+str(jdrive)+".\n\n\nThank you,\nAPP ACTIVTY_BOT"
+#                 email_function(subject1,body1,csr1)
+            except:
+                print(".")
+            driver.quit()
+            time.sleep(2)
+            from datetime import datetime
+            from datetime import datetime, timedelta
+            yesterday = datetime.now() - timedelta(0)
+          #it will create the date with 15 days back 
+            print(type(yesterday))
+            from datetime import datetime
+           # datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            Activityreport(from11,emailid,clientname1,jdrive,"APP Activity","success",dt_string,"")
+            time.sleep(3)
+            dummyexcel(text1,"App Activity","success")           
+
+            createddate=datetime.strftime(yesterday, '%m/%d/%Y')
+            from  datetime import datetime 
+            createddate1=datetime.strptime(createddate,"%m/%d/%Y")
+            time.sleep(4)
+            kill_acrobat()
+
+            import openpyxl
+            path =r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+            wb_obj = openpyxl.load_workbook(path) 
+            sheet= wb_obj.active 
+            print("ok")
+            max_row = sheet.max_row
+            print(max_row)
+            sheet.cell(max_row+1,1).value=from11 
+            sheet.cell(max_row+1,2).value=client_namejgp
+            #------------------------------------------------------
+            # wc_type = extract_wc_type_from_path(jdrivepath)
+            # sheet.cell(max_row+1,3).value = wc_type
+            #---------------------------------------------------------
+            sheet.cell(max_row+1,4).value=jdrive
+            sheet.cell(max_row+1,5).value=createddate1
+            sheet.cell(max_row+1,6).value=emailid
+            sheet.cell(max_row+1,7).value="phase1"
+            sheet.cell(max_row+1,13).value=referencepath
+            wb_obj.save(path)
+            try:
+                import wmi
+
+                name = 'Process_Name'
+                f = wmi.WMI()
+                for process in f.Win32_Process():
+                    if process.name =="iexplore.exe":
+                        process.Terminate()
+            except:
+                print("nothing ")
+        elif str(i.subject).lower()=="wcq activity":
+            d["lst%s"%j]=["ok"]
+            #fromapp=[]
+            From1=i.sender
+            vins=From1
+            from11=str(vins)
+            from12=from11.split(" ")
+            from1=from12[0]
+            print(vins,"vvvvvvvvvvvvvviiiiiiiiiiiiiiiinnnnnnnnnnnnnsssssssssss")
+           # fromapp.append(From1)
+            if i.Class==43:
+                if i.SenderEmailType=='EX':
+
+                   # print(i.Sender.GetExchangeUser().PrimarySmtpAddress)
+
+                    emailid=i.Sender.GetExchangeUser().PrimarySmtpAddress
+                else:
+                    emailid=i.SenderEmailAddress
+                    print(emailid,"**********************")#
+            i.unread=False
+            body=i.body
+            print(body)
+            print(vins,"llllllaaaaaaaaaaaaaxxxxxxxxxxxmmmmmmmmmmmiiiiiiiiiiii")
+            for item in body.split("\n"):
+
+                k=item.strip()
+                #print(d["lst%s"])
+
+                d["lst%s"%j].append(k)
+            d["lst%s"%j]=list(filter(lambda x:x!="",d["lst%s"%j]))
+            d["lst%s"%j]=d["lst%s"%j][:-1]
+            d["lst%s"%j][0]=from11+"<"+emailid+">"
+            index1.append(j)
+            print("hjhjhjhjhhjhhjhjhjhjhj",index1)
+            j=j+1
+            print("ddddiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiicccccccccccttttttttt",d)
+        elif "wcq ac" in str(i.subject).lower():
+            From1=i.sender
+            vins=From1
+            from11=str(vins)
+            from12=from11.split(" ")
+            from1=from12[0]
+            print(vins,"vvvvvvvvvvvvvviiiiiiiiiiiiiiiinnnnnnnnnnnnnsssssssssss")
+           # fromapp.append(From1)
+            if i.Class==43:
+                if i.SenderEmailType=='EX':
+
+                   # print(i.Sender.GetExchangeUser().PrimarySmtpAddress)
+
+                    emailid=i.Sender.GetExchangeUser().PrimarySmtpAddress
+                else:
+                    emailid=i.SenderEmailAddress
+                    print(emailid,"**********************")#
+            i.unread=False
+            body=i.body
+            print(body)
+            print(vins,"llllllaaaaaaaaaaaaaxxxxxxxxxxxmmmmmmmmmmmiiiiiiiiiiii")
+            for item in body.split("\n"):
+                if "File Name" in item:
+                    print("*"*100)
+                    k=item.strip()
+                    text1=k
+                    for l,g in enumerate(str(text1[11:])):
+                        if g.isalpha():
+                            fi=l
+                            print(g)
+                            break;
+                    try:
+                        in_f=text1.index("@")
+                        text1=text1[11+fi:in_f+1]
+                        print(text1,"okkkkkkkkkkkkkkkkkkkk1")
+                    except:
+                        text1=text1[11+fi:]
+                        print(text1,"oooooooooooooooooooooo")
+            subject1="BOT Failed To Process WCQ Bot"
+            body1="Hi "+str(from1)+",\n\nBot failed to complete WCQ Activity process . Bot found incorrect subject line.\nJ drivepath: "+str(text1)+".\n\n\nThank you,\nJanice"
+            csr=emailid
+            email_function(subject1,body1,csr)
+            time.sleep(8)
+            from datetime import datetime
+            c=str(text1).split(maxsplit=1)
+            c1=c[1]
+            c2=c1.split(" ")
+            clientname1=""
+            for i in range(1,len(c2)):
+                if c2[i]=='WC':
+                    break;
+                clientname1+=c2[i]+" "
+# datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+            Activityreport(from11,emailid,clientname1,commonpath+text1,"WCQ Activity","Failure",dt_string,"BOT found incorrect subject line")
+            #logout=driver.find_element(By.ID,"logout-button")
+            time.sleep(3)
+            dummyexcel(text1,"WCQ Activity","Failure")
+
+        elif  "app ac" in str(i.subject).lower():  
+            From1=i.sender
+            vins=From1
+            from11=str(vins)
+            from12=from11.split(" ")
+            from1=from12[0]
+            print(vins,"vvvvvvvvvvvvvviiiiiiiiiiiiiiiinnnnnnnnnnnnnsssssssssss")
+           # fromapp.append(From1)
+            if i.Class==43:
+                if i.SenderEmailType=='EX':
+                   # print(i.Sender.GetExchangeUser().PrimarySmtpAddress)
+                    emailid=i.Sender.GetExchangeUser().PrimarySmtpAddress                 
+                else:
+                    emailid=i.SenderEmailAddress
+                    print(emailid,"**********************")#
+            i.unread=False
+            body=i.body
+            print(body)
+            print(vins,"llllllaaaaaaaaaaaaaxxxxxxxxxxxmmmmmmmmmmmiiiiiiiiiiii")
+            for item in body.split("\n"):
+                if "File Name" in item:
+                    print("*"*100)
+                    k=item.strip()
+                    text1=k
+                    for l,g in enumerate(str(text1[11:])):
+                        if g.isalpha():
+                            fi=l
+                            print(g)
+                            break;
+                    try:
+                        in_f=text1.index("@")
+                        text1=text1[11+fi:in_f+1]
+                        print(text1,"okkkkkkkkkkkkkkkkkkkk1")
+                    except:
+                        text1=text1[11+fi:]
+                        print(text1,"oooooooooooooooooooooo")
+            subject1="BOT Failed To Process App Bot"
+            body1="Hi "+str(from1)+",\n\nBot failed to complete App Activity process . Bot found incorrect subject line.\nJ drivepath: "+str(text1)+".\n\n\nThank you,\nJanice"
+            csr=emailid
+            email_function(subject1,body1,csr)
+            time.sleep(8)
+            from datetime import datetime
+            c=str(text1).split(maxsplit=1)
+            c1=c[1]
+            c2=c1.split(" ")
+            clientname1=""
+            for i in range(1,len(c2)):
+                if c2[i]=='WC':
+                    break;
+                clientname1+=c2[i]+" "
+
+# datetime object containing current date and time
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S") 
+            Activityreport(from11,emailid,clientname1,commonpath+text1,"App Activity","Failure",dt_string,"BOT found incorrect subject line")
+            #logout=driver.find_element(By.ID,"logout-button")
+            time.sleep(3)
+            dummyexcel(text1,"App Activity","Failure")
+
+index2=blankmarket()#vins456
+print(d,"iiiiiiiiiiiiiiiiiiiinnnnnnnnnnnnnnnnndedeeeeeeeexxxx2222222222222")
+time.sleep(5)
+index3,FAST_TRACK=jdriverpathmatchexception()
+print(d,"iiiiiiiiiiiiiiiiiiiinnnnnnnnnnnddddddddddddeeeeeexxxxx33333333")
+time.sleep(4)
+index3=list(set(index3))
+index1=index3
+time.sleep(4)
+import openpyxl
+path = r"C:\Users\exdion3\Documents\Exdion BOTs\WCQuote BOT Interactions\Reports\DairyCalendarReport.xlsx"
+
+# To open the workbook  
+# workbook object is created 
+wb_obj = openpyxl.load_workbook(path) 
+
+
+sheet= wb_obj.active 
+#sheet.cell(row=2, column=2).value = 5  
+todaydate=todaysdatezeroformat()
+for i,row in enumerate(sheet.iter_rows()):
+   # try:
+    if i==0:
+        continue;
+    elif row[6].value=="completed":
+        continue;
+    elif i in FAST_TRACK:
+        created_date=0
+        created_date1=0
+        date10,date15,date20=0,0,0
+        try:
+            created_date=row[4].value
+       # print("created date",created_date)
+            from  datetime import datetime 
+            created_date1=datetime.strptime(created_date,"%m/%d/%Y")
+            #print("created_date1",created_date1)
+            import datetime
+            date10=created_date1+datetime.timedelta(days=10)
+            date15=created_date1+datetime.timedelta(days=15)
+            date20=created_date1+datetime.timedelta(days=20)
+            #print("+++++++++++++++++++10",date10,"---",date15,"----",date20,"------",created_date1)
+            from datetime import datetime
+            #todaydate=todaysdatezeroformat()
+        except:
+            #print("pppppppppppp")
+            created_date1=0
+            created_date1=row[4].value
+            #print("created_date1",created_date1)
+            import datetime
+            date10=created_date1+datetime.timedelta(days=10)
+            date15=created_date1+datetime.timedelta(days=15)
+            date20=created_date1+datetime.timedelta(days=20)
+            #print("+++++++++++++++++++10",date10,"---",date15,"----",date20,"------",created_date1)
+            from datetime import datetime
+            #todaydate=todaysdatezeroformat()
+        #except:
+         #   continue
+        time.sleep(4)
+        if created_date1<=todaydate and todaydate<date10:
+           # print("bhhhhraaaatt111111")
+            for j in index1:
+
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                        #print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+
+                    path1=row[3].value
+                    print(["lst%s"%j],row[1].value)
+                    print(d["lst%s"%j][4][16+gi:],row[12].value)
+                    print(((row[0].value).split())[0], row[5].value)
+                    print(row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    l=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if l==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[7].value=todaystrformat
+                    row[10].value=dt_string
+                    row[11].value=carriermag
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    time.sleep(4)
+                    break;
+        elif date10==todaydate:
+            #print("bharat!111111111111111>....1111111")
+            res=False
+            bool1=True
+           # print("thats ok ")
+            for j in index1:
+               # print("okkkkkkkkkkkkkkk")
+                #res=False
+                #bool1=True
+
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                #print("jjjjjjjjjjjjjjjjjj",jdriver3,"ccccccccccccccc",commonpath+d["lst%s"%j][3][11:])
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                       # print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+
+                    path1=row[3].value
+                    bool1=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if bool1==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[7].value=todaystrformat
+                    row[10].value=dt_string
+                    row[11].value=carriermag
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    time.sleep(4)
+                    res=True
+                    break;
+            if res==False and bool1==True: 
+                print("labbbbbbbbbbb00000000000000000000000000000000000000000")
+                if row[7].value:
+                    print("l1111111111111111111111111111111")
+                else:
+                    body = "Second Request !\n\nTo date the Appulate Arrowhead supplemental application has not been completed for "+(row[3].value)+" .Please complete as soon as possible to continue the quoting process.\n\nThank you\nJanice"
+                    SUBJECT = "Appulate Supplement Completion Second Request ! -"+str(row[1].value)
+                    csr=row[5].value#"bharat_raaj@exdion.com"
+                    email_function_riminder(SUBJECT,body,csr)
+                    time.sleep(5)
+
+                    import datetime
+                    todaystrformat=todaystr()
+                    row[7].value=todaystrformat
+                    print("ok111111111111111111111111111111111111111111111111111111111111111")
+                    row[6].value="phase 2"
+                    wb_obj.save(path)
+    ################################################################
+        elif created_date1<=todaydate and todaydate<date15 and date10<todaydate:
+            #print("bharat22222222222")
+            for j in index1:
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                       # print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+
+                    path1=row[3].value
+                    l=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if l==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[8].value=todaystrformat
+                    row[10].value=dt_string
+                    row[11].value=carriermag
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    time.sleep(4)
+                    break;
+        elif todaydate==date15:
+           # print("bharat 22222......22222")
+            res=False
+            bool1=True
+            for j in index1:
+                print("okkkkkkkkkkkkkkk")
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                #print("jjjjjjjjjjjjjjjjjj",jdriver3,"ccccccccccccccc",commonpath+d["lst%s"%j][3][11:])
+
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                       # print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                      #  print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+
+                    path1=row[3].value
+                    bool1=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if bool1==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[8].value=todaystrformat
+                    row[10].value=dt_string
+                    row[11].value=carriermag
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    time.sleep(4)
+                    res=True
+                    break;
+    ############################phase333333333333333333333333333###################################
+        elif created_date1<=todaydate and todaydate<date20 and date15<todaydate:
+           # print("bharat 333.")
+            for j in index1:
+
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                #print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                        #print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+
+                    path1=row[3].value
+                    l=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if l==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[9].value=todaystrformat
+                    row[11].value=carriermag
+                    row[10].value=dt_string
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    time.sleep(4)
+                    break;
+        elif todaydate==date20:
+            #print("bharat 3....333")
+            res=False
+            bool1=True
+            for j in index1:
+               # print("okkkkkkkkkkkkkkk")
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                #print("jjjjjjjjjjjjjjjjjj",jdriver3,"ccccccccccccccc",commonpath+d["lst%s"%j][3][11:])
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                        #print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=toda
+
+                    path1=row[3].value
+                    bool1=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if bool1==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    row[9].value=todaystrformat
+                    row[11].value=carriermag
+                    row[10].value=dt_string
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    Activityreport(row[0].value,row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(4)
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    res=True
+                    break;
+            if res==False and bool1==True: 
+                if  row[9].value:
+                    print("l2")
+                else:
+                    SUBJECT = "Appulate Supplement Completion Fourth and Final Request ! -"+str(row[1].value)
+                    body = "Fourth and Final Request !\n\nTo date the Appulate Arrowhead supplemental application has not been completed for "+(row[3].value)+" .Please complete as soon as possible to continue the quoting process.\n\nThank you\nJanice"
+                    csr=row[5].value 
+                    csr_name = csr
+                    manager_email = get_manager_email(csr_name)
+                    manager_email
+                    if (len(manager_email))==0:   
+                        email_function_request(SUBJECT, body, csr, cc="KJSimmons@JGParker.com")
+                        time.sleep(5)
+                    else:
+                        print(manager_email)
+                        email_function_request(SUBJECT, body, csr, cc="KJSimmons@JGParker.com",cc1=manager_email)
+                        print("added prodction manager")
+                    time.sleep(2)
+                    import datetime
+                    todaystrformat=todaystr()
+                    row[9].value=todaystrformat
+                    row[6].value="phase4"
+                    wb_obj.save(path)
+                    time.sleep(4)
+        elif todaydate>date20:
+            print("bharattttt444444444llllllllllllllllllllllllllsaaaaaaaaaaaaaaaaaaaaaaaasss")
+            res=False
+            bool1=True
+            for j in index1:
+                #print("okkkkkkkkkkkkkkk")
+                jdriver=row[3].value
+                jdriver3=jdriver#.replace("\\\\","\\")
+                #print("jjjjjjjjjjjjjjjjjj",jdriver3,"ccccccccccccccc",commonpath+d["lst%s"%j][3][11:])
+                in_f1=d["lst%s"%j][3].index("@")
+                for r,m in enumerate(d["lst%s"%j][3][11:]):
+                    if m.isalpha():
+                        fi=r
+                       # print(m)
+                        break;
+                for r,m in enumerate(d["lst0"][4][16:]):
+                    if m.isdigit():
+                        gi=r
+                       # print(m)
+                        break;
+                if jdriver3==commonpath+d["lst%s"%j][3][11+fi:in_f1+1]:
+                    print(jdriver3,"****",commonpath+d["lst%s"%j][3][11:])
+                    todaystrformat=todaystr()
+                    print(row[1].value,"cllllll")
+
+                    path1=row[3].value
+                    bool1=marketsummary(d["lst%s"%j],row[1].value,d["lst%s"%j][4][16+gi:],row[12].value,(((row[0].value).split())[0]),row[5].value,row[1].value,row[3].value,d["lst%s"%j][3][11:],row[0].value)
+                    if bool1==False:
+                        row[6].value="Exception"
+                        wb_obj.save(path)
+                        break;
+                    carrierschedulereportexcel(d["lst%s"%j],row[0].value,row[1].value,d["lst%s"%j][4][16+gi:],row[4].value,row[5].value,jdriver3)
+                    from datetime import datetime
+                    now = datetime.now()
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+                    carrierindex=d["lst%s"%j].index("Please create marketing summary:")
+                    carriermag=""
+                    for i in d["lst%s"%j][carrierindex+1:]:
+                        carriermag+=i+";"
+                    row[6].value="Received"
+                    #row[9].value=todaystrformat
+                    row[11].value=carriermag
+                    row[10].value=dt_string
+                    wb_obj.save(path)
+                    time.sleep(4)
+                    from datetime import datetime
+
+            # datetime object containing current date and time
+                    now = datetime.now()
+
+                    
+                    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+
+                    Activityreport(row[0].value, row[5].value,row[1].value,row[3].value,"WCQ Activity","success",dt_string,"")
+                    time.sleep(4) 
+                    time.sleep(3)
+                    dummyexcel(d["lst%s"%j][3][11:],"WCQ Activity","success")
+                    res=True
+                    break; 
+                                     
+    #Progressnnnnnnnnnnnnnnnnnnnnnnnnnnnnnneeeeeeeeeeeeexxxxxxxxxxxxxxxxxxxxxxtttttttttttttttttttt
+    #deleteemptyrows 
+ 
+
+
+
+    
